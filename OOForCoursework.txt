@@ -1,0 +1,4 @@
+—x public class Reader
+—> public class Binary extends Reader
+—> public class Text extends Reader
+
