@@ -9,10 +9,14 @@ import java.util.ArrayList;
  */
 
 public class TextReader {
-    private ArrayList txtReader(String filename) throws IOException{
-        FileReader readFile = new FileReader(filename);
-        BufferedReader inFile = new BufferedReader(readFile);
 
+    // Read txt files
+    private ArrayList txtReader(String filename) throws IOException{
+        // Read file name
+        FileReader readFile = new FileReader(filename);
+        // Use buffered reader for lines
+        BufferedReader inFile = new BufferedReader(readFile);
+        // Create empty array for lines
         ArrayList lines = new ArrayList();
 
         String currentLine;
@@ -21,6 +25,7 @@ public class TextReader {
             lines.add(currentLine);
         }
 
+        // Close buffered reader
         inFile.close();
 
         return lines;
