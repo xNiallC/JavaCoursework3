@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by niall on 03/04/2017.
  */
 
-public class TextReader {
+class TextReader {
 
     // Read txt files
     private ArrayList txtReader(String filename) throws IOException{
@@ -33,7 +33,7 @@ public class TextReader {
     private String binaryReader(String filename) throws IOException {
         return filename;
     }
-    public ArrayList readFile(String filename) throws IOException {
+    ArrayList readFile(String filename) throws IOException {
         return txtReader(filename);
     }
 }
