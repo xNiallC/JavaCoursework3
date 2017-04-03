@@ -17,7 +17,7 @@ public class TextReader {
         // Use buffered reader for lines
         BufferedReader inFile = new BufferedReader(readFile);
         // Create empty array for lines
-        ArrayList lines = new ArrayList();
+        ArrayList<String> lines = new ArrayList<>();
 
         String currentLine;
         // Line reader tool used in Reading-Writing lectures
