@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * Created by niall on 03/04/2017.
- */
-
 class TextReader {
 
     // Read txt files

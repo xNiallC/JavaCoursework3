@@ -2,19 +2,41 @@ package uk.co.niallcurtis.JavaCoursework3;
 
 // TODO: CHECK ALL EXCEPTIONS!
 
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-/**
- * Created by niall on 03/04/2017.
- */
+
 public class QuestionOne {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // System.out.println("Enter File");
-        // filename = in.nextLine();
+        // Get user input for filename, convert it to Path
+        System.out.println("Enter File Name:\n");
+        String fileInput = in.nextLine();
+        Path fileLocation = Paths.get(fileInput);
 
-        String filename = "/Users/niall/Documents/NiallUni/Java/Coursework3/out/production/Coursework3/uk/co/niallcurtis/JavaCoursework3/test.txt";
+        String filename = "";
+
+        // If file path exists, convert to string then move on
+        if(Files.exists(fileLocation)) {
+            filename = filename + fileLocation.toString();
+            System.out.println("Using file " + filename);
+        }
+        // Else we try to create the file to be used, or fail and quit
+        else {
+            try {
+                Path newFile = Files.createFile(fileLocation);
+                filename = filename + newFile.toString();
+                System.out.println("File not found, creating ... ");
+                System.out.println("Created" + filename);
+
+            }
+            catch(Exception e) {
+                System.out.println("Critical Error, quitting");
+                System.out.println(e);
+                System.exit(0);
+            }
+        }
 
         // Local menu variable
         int menu = 0;
@@ -79,6 +101,8 @@ public class QuestionOne {
 
                             // Try to write text to file
                             try {
+                                // Write to a new line, then the user input
+                                TextWriter.txtWriter("\n", filename);
                                 TextWriter.txtWriter(userInput, filename);
                             }
                             catch (Exception e) {
@@ -127,7 +151,7 @@ public class QuestionOne {
 
                     // Run delete function
                     try {
-                        TextWriter.txtDelete(lineNumber, filename, lines);
+                        TextWriter.txtDelete(filename, lines);
                     }
                     catch (Exception e) {
                         System.out.println(e);
