@@ -52,7 +52,7 @@ public class QuestionOne {
             }
             catch (Exception e) {
                 System.out.println("Please enter only a number.\n");
-                in.nextLine();
+                in.next();
             }
 
             // Menu switch cases
@@ -76,42 +76,29 @@ public class QuestionOne {
                 case 2:
                     // TODO: Create 'CreateRecord' function, to iterate through required fields, get user input then parse it before finally adding them all. Will need to be added to one line, seperated by commas
                     // Write to file function
-                    int writeMenu = 0;
-
-                    System.out.println("\n------ Write to File ------");
-                    System.out.println("\n1: Write to .txt");
                     // TODO: Write to binary
                     // TODO: Regex input
 
-                    // Read txt
+                    System.out.println("Enter Text:");
+
+                    in.nextLine();
+                    String userInput = in.nextLine();
+
+                    // Try to write text to file
                     try {
-                        writeMenu = in.nextInt();
+                        TextReader rdr = new TextReader();
+                        // We check if the file is empty. If it is, we don't write a new line
+                        if(rdr.readFile(filename).size() != 0) {
+                            TextWriter.txtWriter("\n", filename);
+                        }
+                        TextWriter.txtWriter(userInput, filename);
                     }
                     catch (Exception e) {
-                        System.out.println("Please enter only a number.\n");
-                        in.nextLine();
-                    }
-
-                    switch(writeMenu) {
-                        case 1:
-                            System.out.println("Enter Text:");
-
-                            in.nextLine();
-                            String userInput = in.nextLine();
-
-                            // Try to write text to file
-                            try {
-                                // Write to a new line, then the user input
-                                TextWriter.txtWriter("\n", filename);
-                                TextWriter.txtWriter(userInput, filename);
-                            }
-                            catch (Exception e) {
-                                System.out.println("Write Failed!");
-                                e.printStackTrace();
-                            }
-                            break;
+                        System.out.println("Write Failed!");
+                        e.printStackTrace();
                     }
                     break;
+
                 case 3:
                     // Local variables
                     int lineNumber;
@@ -156,6 +143,7 @@ public class QuestionOne {
                     catch (Exception e) {
                         System.out.println(e);
                     }
+                    break;
             }
         } while(menu != 9);
     }
