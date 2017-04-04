@@ -7,7 +7,7 @@ import java.util.ArrayList;
 class TextReader {
 
     // Read txt files
-    private ArrayList txtReader(String filename) throws IOException{
+    static private ArrayList txtReader(String filename) throws IOException{
         // Read file name
         FileReader readFile = new FileReader(filename);
         // Use buffered reader for lines
@@ -26,10 +26,10 @@ class TextReader {
 
         return lines;
     }
-    private String binaryReader(String filename) throws IOException {
+    static private String binaryReader(String filename) throws IOException {
         return filename;
     }
-    String getExtension(String filename) {
+    static String getExtension(String filename) {
         // Local variable to mutate
         String fileExtension = "";
         // Get . position for substring
@@ -42,7 +42,7 @@ class TextReader {
         return fileExtension;
     }
     // TODO: Read and write in binary after testing for extension
-    ArrayList readFile(String filename) throws IOException {
+    static ArrayList readFile(String filename) throws IOException {
         // To be able to read the files correctly dependent on format, we need to get the file extension
         String fileExtension = getExtension(filename);
         // Check if its txt, so we deal with the file in a text way

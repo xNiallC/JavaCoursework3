@@ -2,6 +2,7 @@ package uk.co.niallcurtis.JavaCoursework3;
 
 // TODO: CHECK ALL EXCEPTIONS!
 
+import java.lang.reflect.Array;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -44,7 +45,10 @@ public class QuestionOne {
             System.out.println("\n------ Student Details ------\n");
             System.out.println("1: Read File");
             System.out.println("2: Write to File");
-            System.out.println("3: Delete Line\n");
+            System.out.println("3: Delete Line");
+            System.out.println("4: Search Coursename");
+            System.out.println("5: Search Address");
+            System.out.println("6: Search Subset\n");
 
             // Test user input to check its an int
             try {
@@ -58,11 +62,9 @@ public class QuestionOne {
             // Menu switch cases
             switch(menu) {
                 case 1:
-                    // Instantiate Text Reader instance
-                    TextReader reader = new TextReader();
                     // TODO: Read from binary
                     try {
-                        ArrayList<String> lines = reader.readFile(filename);
+                        ArrayList<String> lines = TextReader.readFile(filename);
                         for(String info: lines) {
                             System.out.println(info);
                         }
@@ -79,24 +81,8 @@ public class QuestionOne {
                     // TODO: Write to binary
                     // TODO: Regex input
 
-                    System.out.println("Enter Text:");
-
-                    in.nextLine();
-                    String userInput = in.nextLine();
-
-                    // Try to write text to file
-                    try {
-                        TextReader rdr = new TextReader();
-                        // We check if the file is empty. If it is, we don't write a new line
-                        if(rdr.readFile(filename).size() != 0) {
-                            TextWriter.txtWriter("\n", filename);
-                        }
-                        TextWriter.txtWriter(userInput, filename);
-                    }
-                    catch (Exception e) {
-                        System.out.println("Write Failed!");
-                        e.printStackTrace();
-                    }
+                    // Run our method to create a student
+                    StudentRecord.createStudent(filename);
                     break;
 
                 case 3:
@@ -116,9 +102,8 @@ public class QuestionOne {
                     }
 
                     // Get list currently in the file
-                    TextReader rdr = new TextReader();
                     try {
-                        lines = rdr.readFile(filename);
+                        lines = TextReader.readFile(filename);
                     }
                     catch (Exception e){
                         System.out.println("Reading Failure!");
@@ -126,22 +111,56 @@ public class QuestionOne {
                         break;
                     }
 
-                    // Attempt to delete item from list, if it's there
+                    // Run delete method
+                    StudentRecord.deleteStudent(filename, lineNumber, lines);
+                    break;
+                // For all search cases, we simply just run their respective method and print the results, or no results if none are found.
+                case 4:
+                    ArrayList<String> records = StudentRecord.searchCourse(filename);
+                    for(String record: records) {
+                        System.out.println(record);
+                    }
+                    if(records.size() == 0) {
+                        System.out.println("No results found.");
+                    }
+                    break;
+                case 5:
+                    ArrayList<String> records2 = StudentRecord.searchAddress(filename);
+                    for(String record: records2) {
+                        System.out.println(record);
+                    }
+                    if(records2.size() == 0) {
+                        System.out.println("No results found.");
+                    }
+                    break;
+                case 6:
+                    System.out.println("Enter Lower Limit of Subset:");
+                    int lowerBound;
+                    int upperBound;
+                    // Read in line number
                     try {
-                        System.out.println("Deleting Line: " + lines.get(lineNumber));
-                        lines.remove(lineNumber);
+                        lowerBound = in.nextInt();
                     }
                     catch (Exception e) {
-                        System.out.println("Line not in file!");
+                        System.out.println("Please enter only a number.\n");
+                        in.nextLine();
                         break;
                     }
-
-                    // Run delete function
+                    System.out.println("Enter Upper Limit of Subset:");
                     try {
-                        TextWriter.txtDelete(filename, lines);
+                        upperBound = in.nextInt();
                     }
                     catch (Exception e) {
-                        System.out.println(e);
+                        System.out.println("Please enter only a number.\n");
+                        in.nextLine();
+                        break;
+                    }
+                    ArrayList<String> records3 = StudentRecord.searchSubset(filename, lowerBound, upperBound);
+                    for(String record: records3) {
+                        System.out.println(record);
+                    }
+                    if(records3.size() == 0) {
+                        System.out.println("No results found.");
                     }
                     break;
             }
