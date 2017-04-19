@@ -1,4 +1,8 @@
 package uk.co.niallcurtis.JavaCoursework3;
+/*
+ * Name: Niall Curtis
+ * Student number: C1623580
+ */
 
 import java.util.ArrayList;
 import java.util.Scanner;

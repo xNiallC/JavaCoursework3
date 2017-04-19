@@ -1,3 +1,8 @@
+/*
+ * Name: Niall Curtis
+ * Student number: C1623580
+ */
+
 package uk.co.niallcurtis.JavaCoursework3;
 
 // Regex expressions adapted from tutorial/API here:
