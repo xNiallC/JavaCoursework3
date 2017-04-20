@@ -38,31 +38,15 @@ public class Shortener {
     public Shortener( String inAbbreviationsFilePath ) {
         this.filename = new File(inAbbreviationsFilePath);
     }
-    
-    /*
-     * This method attempts to shorten a word by finding its abbreviation. If 
-     * no abbreviation exists for this word, then this method will return the 
-     * original (i.e., unshortened) word.
-     * 
-     * You may assume that words are always lower case.
-     *
-     * `inWord` should be a single word (no spaces). It may optionally be
-     * followed by one of the five following punctuation characters:
-     *   ,
-     *   ?
-     *   .
-     *   !
-     *   ;
-     * If one of these characters is at the end of the word this method will
-     * shorten the word (ignoring the punctuation) and return the shortened
-     * word with the punctuation character at the end.
-     * For example,
-     *     shortenerObject.shortenWord( "hello?" )
-     * should return
-     *     "lo?"
-     *
-     * You may assume that words are always lower case.
-     */
+
+    // Methods to change the abbreviations file
+    public void changeFile(String path){
+        this.filename = new File(path);
+    }
+    public void changeFile(File path){
+        this.filename = path;
+    }
+
     public String shortenWord( String inWord ) {
         inWord = inWord.trim();
         // We get String path and reuse method from last question. OO!
@@ -81,6 +65,7 @@ public class Shortener {
                 // If we look at substring java docs, we can make a substring from characters' index in a string
                 // Now we have the word without punctuation
                 inWord = inWord.substring(0, inWord.length() - 1);
+                // Return our punctuation
                 lastLetter += endPunc;
             }
             for(String word : shorts) {
@@ -99,8 +84,8 @@ public class Shortener {
         catch(Exception e) {
             System.out.println("Reading Failure!");
             e.printStackTrace();
+            return(filename.getPath() + " could not be read.");
         }
-        return inWord;
     }
     public String shortenPhrase( String inPhrase) {
         inPhrase = inPhrase.trim();
@@ -135,17 +120,28 @@ public class Shortener {
         catch(Exception e) {
             System.out.println("Reading Failure!");
             e.printStackTrace();
+            return(filename.getPath() + " could not be read.");
         }
-        return inPhrase;
     }
+
     /*
-     * Attempts to shorten a message by replacing words with their 
-     * abbreviations. 
-     *
-     * You may assume that messages are always lower case.
-     *
-     * Punctuation characters (,?.!;) should be retained after shortening. See
-     * `shortenWord( String inWord )` for more information.
+
+    shortenMessage was designed using a flow chart with pen and paper, but I will try to explain it here.
+    The method follows a cyclic order of operation that allows it to efficiently deal with phrases, individual words
+    and non matches efficiently with one consistent process. This is kind of the process, starting with a copy of the inMessage
+
+    --- Start ---
+    Is the message length > 0?
+    No --> End and return final abbreviated message
+    Yes --> Move forward to match
+
+    Does the current entire message match any abbreviation?
+    No --> Remove first word (before first whitespace) and return to the start again
+    Yes --> Remove the matched word/phrase from END of message, add abbreviation/word to final message, return to start
+
+    It essentially starts with a long sentence, reducing by one word from the left each cycle until it gets a match.
+    The match will ALWAYS be the right most phrase/word, so we can safely remove that and restart the process
+
      */
     public String shortenMessage(String inMessage) {
         // To make things easier, we simply return single word entries straight away to avoid complication

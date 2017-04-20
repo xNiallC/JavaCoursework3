@@ -1,6 +1,8 @@
+package uk.co.niallcurtis.JavaCoursework3;
+
 /*
- * Name: ???
- * Student number: ???
+ * Name: Niall Curtis
+ * Student number: C1623580
  */
 
 import javax.swing.JFrame;
