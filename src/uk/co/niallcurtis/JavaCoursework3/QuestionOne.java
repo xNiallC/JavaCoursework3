@@ -7,7 +7,6 @@ package uk.co.niallcurtis.JavaCoursework3;
 
 // TODO: CHECK ALL EXCEPTIONS!
 
-import java.lang.reflect.Array;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Scanner;

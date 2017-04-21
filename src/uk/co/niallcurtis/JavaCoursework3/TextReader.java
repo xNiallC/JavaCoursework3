@@ -5,9 +5,12 @@
 
 package uk.co.niallcurtis.JavaCoursework3;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.IOException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class TextReader {
 
@@ -31,8 +34,21 @@ class TextReader {
 
         return lines;
     }
-    static private String binaryReader(String filename) throws IOException {
-        return filename;
+    static private ArrayList binaryReader(String filename) throws IOException {
+        File inputFile = new File(filename);
+        int inputLength = (int) inputFile.length();
+        byte[] inputData = new byte[inputLength];
+
+        FileInputStream inFile = new FileInputStream(inputFile);
+        inFile.read(inputData, 0, inputData.length);
+        inFile.close();
+
+        String inputString = new String(inputData);
+        //BufferedReader inFile = binaryOpen(filename);
+
+        ArrayList<String> lines = new ArrayList<>(Arrays.asList(inputString.split("[\\r\\n]+")));
+
+        return lines;
     }
     static String getExtension(String filename) {
         // Local variable to mutate
@@ -55,8 +71,7 @@ class TextReader {
             return txtReader(filename);
         }
         else {
-            // Should return binary
-            return txtReader(filename);
+            return binaryReader(filename);
         }
     }
 }

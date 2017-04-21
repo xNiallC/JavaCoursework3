@@ -102,9 +102,9 @@ class StudentRecord {
         try {
             // We check if the file is empty. If it is, we don't write a new line
             if(TextReader.readFile(filename).size() != 0) {
-                TextWriter.txtWriter("\n", filename);
+                TextWriter.fileWriter("\n", filename);
             }
-            TextWriter.txtWriter(studentRecord, filename);
+            TextWriter.fileWriter(studentRecord, filename);
         }
         catch (Exception e) {
             System.out.println("Write Failed!");

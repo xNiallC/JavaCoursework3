@@ -5,7 +5,8 @@
 
 package uk.co.niallcurtis.JavaCoursework3;
 
-import java.io.IOException;
+import javax.xml.soap.Text;
+import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 
@@ -25,11 +26,30 @@ class TextWriter {
             e.printStackTrace();
         }
     }
+    static void binaryWriter(String input, String filename) throws IOException {
+        // Get bytes of input string
+        byte[] binaryInput = input.getBytes();
+
+        // Create new output stream to write
+        FileOutputStream writeBinary = new FileOutputStream(filename);
+        // Write the bytes
+        writeBinary.write(binaryInput, 0, binaryInput.length);
+        // Cleanup before closing
+        writeBinary.flush();
+        writeBinary.close();
+    }
     static void txtDelete(String filename, ArrayList<String> lines) throws IOException {
         try {
-            // Make a new temporary file
-            Path tempFile = Files.createFile(Paths.get("temp.txt"));
-
+            String oldFile;
+            Path tempFile;
+            if(TextReader.getExtension(filename) == "txt") {
+                // Make a new temporary file
+                oldFile = "temp.txt";
+            }
+            else {
+                oldFile = "temp.dat";
+            }
+            tempFile = Files.createFile(Paths.get(oldFile));
             // Set path and old file
             Path textToReplace = Paths.get(filename);
 
@@ -38,8 +58,8 @@ class TextWriter {
 
             // Write lines to new file
             for(String item: lines) {
-                txtWriter(item, "temp.txt");
-                txtWriter("\n", "temp.txt");
+                txtWriter(item, oldFile);
+                txtWriter("\n", oldFile);
             }
 
             // Move temporary file to original file position
@@ -48,6 +68,17 @@ class TextWriter {
         catch (Exception e) {
             // TODO: Better exceptions
             System.out.println(e);
+        }
+    }
+    static void fileWriter(String input, String filename) throws IOException {
+        // To be able to read the files correctly dependent on format, we need to get the file extension
+        String fileExtension = TextReader.getExtension(filename);
+        // Check if its txt, so we deal with the file in a text way
+        if(fileExtension.equals("txt")) {
+            txtWriter(input, filename);
+        }
+        else {
+            binaryWriter(input, filename);
         }
     }
 }
